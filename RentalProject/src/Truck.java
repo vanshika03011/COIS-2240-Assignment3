@@ -1,9 +1,8 @@
-public class Truck extends Vehicle implements Rentable {
+public class Truck extends Vehicle {
     private double cargoCapacity;
 
     public Truck(String make, String model, int year, double cargoCapacity) {
         super(make, model, year);
-        if (cargoCapacity <= 0) throw new IllegalArgumentException("Cargo capacity must be > 0");
         this.cargoCapacity = cargoCapacity;
     }
 
@@ -11,20 +10,27 @@ public class Truck extends Vehicle implements Rentable {
         return cargoCapacity;
     }
 
-    @Override
-    public String getInfo() {
-        return super.getInfo() + " | Cargo Capacity: " + cargoCapacity;
+    public void setCargoCapacity(double cargoCapacity) {
+        this.cargoCapacity = cargoCapacity;
     }
 
     @Override
     public void rentVehicle() {
         setStatus(VehicleStatus.RENTED);
-        System.out.println("Truck " + getLicensePlate() + " has been rented.");
     }
 
     @Override
     public void returnVehicle() {
         setStatus(VehicleStatus.AVAILABLE);
-        System.out.println("Truck " + getLicensePlate() + " has been returned.");
+    }
+
+    @Override
+    public String getInfo() {
+        return "Truck - Plate: " + getLicensePlate() +
+               ", Make: " + getMake() +
+               ", Model: " + getModel() +
+               ", Year: " + getYear() +
+               ", Cargo: " + cargoCapacity + "kg" +
+               ", Status: " + getStatus();
     }
 }

@@ -1,29 +1,36 @@
-public class Car extends Vehicle implements Rentable {
-    private int numSeats;
+public class Car extends Vehicle {
+    private int numberOfSeats;
 
-    public Car(String make, String model, int year, int numSeats) {
+    public Car(String make, String model, int year, int numberOfSeats) {
         super(make, model, year);
-        this.numSeats = numSeats;
+        this.numberOfSeats = numberOfSeats;
     }
 
-    public int getNumSeats() {
-        return numSeats;
+    public int getNumberOfSeats() {
+        return numberOfSeats;
     }
 
-    @Override
-    public String getInfo() {
-        return super.getInfo() + " | Seats: " + numSeats;
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
     }
 
     @Override
     public void rentVehicle() {
         setStatus(VehicleStatus.RENTED);
-        System.out.println("Car " + getLicensePlate() + " has been rented.");
     }
 
     @Override
     public void returnVehicle() {
         setStatus(VehicleStatus.AVAILABLE);
-        System.out.println("Car " + getLicensePlate() + " has been returned.");
+    }
+
+    @Override
+    public String getInfo() {
+        return "Car - Plate: " + getLicensePlate() +
+               ", Make: " + getMake() +
+               ", Model: " + getModel() +
+               ", Year: " + getYear() +
+               ", Seats: " + numberOfSeats +
+               ", Status: " + getStatus();
     }
 }

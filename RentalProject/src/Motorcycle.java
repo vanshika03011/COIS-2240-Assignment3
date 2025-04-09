@@ -1,4 +1,4 @@
-public class Motorcycle extends Vehicle implements Rentable {
+public class Motorcycle extends Vehicle {
     private boolean hasSidecar;
 
     public Motorcycle(String make, String model, int year, boolean hasSidecar) {
@@ -10,20 +10,27 @@ public class Motorcycle extends Vehicle implements Rentable {
         return hasSidecar;
     }
 
-    @Override
-    public String getInfo() {
-        return super.getInfo() + " | Sidecar: " + (hasSidecar ? "Yes" : "No");
+    public void setHasSidecar(boolean hasSidecar) {
+        this.hasSidecar = hasSidecar;
     }
 
     @Override
     public void rentVehicle() {
         setStatus(VehicleStatus.RENTED);
-        System.out.println("Motorcycle " + getLicensePlate() + " has been rented.");
     }
 
     @Override
     public void returnVehicle() {
         setStatus(VehicleStatus.AVAILABLE);
-        System.out.println("Motorcycle " + getLicensePlate() + " has been returned.");
+    }
+
+    @Override
+    public String getInfo() {
+        return "Motorcycle - Plate: " + getLicensePlate() +
+               ", Make: " + getMake() +
+               ", Model: " + getModel() +
+               ", Year: " + getYear() +
+               ", Sidecar: " + (hasSidecar ? "Yes" : "No") +
+               ", Status: " + getStatus();
     }
 }
