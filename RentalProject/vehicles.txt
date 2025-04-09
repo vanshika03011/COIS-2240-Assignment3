@@ -1,0 +1,2 @@
+AAA123,Honda,Camry,2020,Car
+BBB123,Toyota,Shine,2021,Motorcycle
