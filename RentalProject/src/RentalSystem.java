@@ -232,4 +232,15 @@ public class RentalSystem {
            System.out.println("No rental records to load.");
        }
    }
+   public List<Vehicle> getVehicles() {
+       return vehicles;
+   }
+
+   public List<Customer> getCustomers() {
+       return customers;
+   }
+
+   public RentalHistory getRentalHistory() {
+       return rentalHistory;
+   }
 }

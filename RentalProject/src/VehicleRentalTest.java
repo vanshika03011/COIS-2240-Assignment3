@@ -1,7 +1,32 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class VehicleRentalTest {
+
+    private RentalSystem rentalSystem;
+    private Vehicle testCar;
+    private Customer testCustomer;
+
+    @BeforeEach
+    public void setUp() {
+        rentalSystem = RentalSystem.getInstance();
+
+        rentalSystem.getVehicles().clear();
+        rentalSystem.getCustomers().clear();
+        rentalSystem.getRentalHistory().getRentalHistory().clear();
+
+        testCar = new Car("Toyota", "Camry", 2020, 4);
+        testCar.setLicensePlate("ABC123");
+
+        testCustomer = new Customer(1, "Vanshika");
+
+        rentalSystem.addVehicle(testCar);
+        rentalSystem.addCustomer(testCustomer);
+    }
 
     @Test
     public void testLicensePlateValidation() {
@@ -35,5 +60,19 @@ public class VehicleRentalTest {
             Vehicle car = new Car("Toyota", "Yaris", 2020, 4);
             car.setLicensePlate("ZZZ99");
         });
+    }
+
+    @Test
+    public void testRentAndReturnVehicle() {
+        // rent the car
+        rentalSystem.rentVehicle(testCar, testCustomer, LocalDate.of(2025, 4, 10), 250.0);
+        assertEquals(Vehicle.VehicleStatus.RENTED, testCar.getStatus());
+
+        // return the car
+        rentalSystem.returnVehicle(testCar, testCustomer, LocalDate.of(2025, 4, 12), 25.0);
+        assertEquals(Vehicle.VehicleStatus.AVAILABLE, testCar.getStatus());
+
+        // check rental history has two records (rent + return)
+        assertEquals(2, rentalSystem.getRentalHistory().getRentalHistory().size());
     }
 }
