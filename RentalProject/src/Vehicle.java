@@ -21,6 +21,9 @@ public abstract class Vehicle implements Rentable {
     }
 
     public void setLicensePlate(String licensePlate) {
+        if (!isValidPlate(licensePlate)) {
+            throw new IllegalArgumentException("Invalid license plate. Must be 3 uppercase letters followed by 3 digits (e.g., ABC123).");
+        }
         this.licensePlate = licensePlate;
     }
 
@@ -44,10 +47,13 @@ public abstract class Vehicle implements Rentable {
         this.status = status;
     }
 
-    // method for subtask 5
     protected String capitalize(String str) {
         if (str == null || str.isEmpty()) return str;
         return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+    }
+
+    private boolean isValidPlate(String plate) {
+        return plate != null && plate.matches("^[A-Z]{3}\\d{3}$");
     }
 
     public abstract String getInfo();
