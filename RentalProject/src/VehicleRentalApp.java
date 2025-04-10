@@ -13,7 +13,7 @@ public class VehicleRentalApp {
 
             switch (choice) {
                 case 1:
-                    System.out.println("  1: Car\n  2: Motorcycle\n  3: Truck");
+                    System.out.println("  \n1: Car\n  2: Motorcycle\n  3: Truck");
                     int type = scanner.nextInt();
                     scanner.nextLine(); // fix
 
@@ -64,6 +64,7 @@ public class VehicleRentalApp {
                     System.out.print("Enter customer ID: ");
                     int cid = scanner.nextInt();
                     scanner.nextLine(); // fix
+                    scanner.nextLine(); 
                     System.out.print("Enter name: ");
                     String cname = scanner.nextLine();
 
@@ -71,6 +72,7 @@ public class VehicleRentalApp {
                     System.out.println("Customer added.");
                     break;
 
+                    
                 case 3:
                     System.out.println("List of Vehicles:");
                     rentalSystem.displayAvailableVehicles();
