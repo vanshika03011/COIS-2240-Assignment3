@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -64,15 +64,34 @@ public class VehicleRentalTest {
 
     @Test
     public void testRentAndReturnVehicle() {
-        // rent the car
-        rentalSystem.rentVehicle(testCar, testCustomer, LocalDate.of(2025, 4, 10), 250.0);
+        // rent the vehicle
+        rentalSystem.rentVehicle(testCar, testCustomer, LocalDate.of(2025, 4, 10), 200.0);
         assertEquals(Vehicle.VehicleStatus.RENTED, testCar.getStatus());
 
-        // return the car
-        rentalSystem.returnVehicle(testCar, testCustomer, LocalDate.of(2025, 4, 12), 25.0);
+        // return the vehicle
+        rentalSystem.returnVehicle(testCar, testCustomer, LocalDate.of(2025, 4, 11), 20.0);
         assertEquals(Vehicle.VehicleStatus.AVAILABLE, testCar.getStatus());
 
-        // check rental history has two records (rent + return)
+        // rental history should have 2 records: rent + return
         assertEquals(2, rentalSystem.getRentalHistory().getRentalHistory().size());
     }
+
+    @Test
+    public void testFileBasedDataLoading() {
+        RentalSystem loadedSystem = RentalSystem.getInstance();
+
+        List<Vehicle> loadedVehicles = loadedSystem.getVehicles();
+        List<Customer> loadedCustomers = loadedSystem.getCustomers();
+
+        assertTrue(loadedVehicles.size() > 0, "No vehicles loaded from file.");
+        assertTrue(loadedCustomers.size() > 0, "No customers loaded from file.");
+
+        String firstPlate = loadedVehicles.get(0).getLicensePlate();
+        assertTrue(firstPlate.matches("^[A-Z]{3}\\d{3}$"), "Invalid license plate format in loaded vehicle.");
+
+        String customerName = loadedCustomers.get(0).getCustomerName();
+        assertNotNull(customerName, "Customer name is null.");
+        assertFalse(customerName.isEmpty(), "Customer name is empty.");
+    }
 }
+
