@@ -243,4 +243,7 @@ public class RentalSystem {
    public RentalHistory getRentalHistory() {
        return rentalHistory;
    }
+   public List<Vehicle> findAllVehicles() {
+	    return vehicles;
+	}
 }
